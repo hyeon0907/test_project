@@ -26,6 +26,22 @@ const CalendarModal = () => {
   });
   const [todolist, setTodolist] = useState([]);
 
+  // useEffect(() => {
+  //   requestTodoList(date);
+  // }, [date]);
+  // const requestTodoList = async (selectedDate) => {
+  //   // 실제 API 호출 로직을 추가합니다.
+  //   try {
+  //     // 예를 들어, API 호출을 통해 해당 월의 투두 리스트를 가져옵니다.
+  //     const formattedDate = format(selectedDate, 'yyyy-MM', { locale: ko }); // "yyyy-MM" 포맷을 사용할 수 있습니다.
+  //     const response = await axios.get(`http://localhost:8080/api/v1/todolist`, {
+  //       params: { month: formattedDate }
+  //     });
+  //     setTodolist(response.data);
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // };
   const requestTodoList = async () => {
     const response =  registertodo;
     console.log(response);
@@ -86,10 +102,6 @@ const CalendarModal = () => {
       todoDate.getMonth() === date.getMonth()
     );
   });
-
-  // useEffect(()=> {
-  //   requestTodoList(date)
-  // },[date])
 
   return (
     <div className="App">
