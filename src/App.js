@@ -1,21 +1,12 @@
-
 import React from 'react';
-
-import CalendarModal from './components/CalendarModal/CalendarModal';
-
+import KakaoMap from './page/test1/Test1';
 
 function App() {
-  
-
-    return (
-      <>
-          {/* <Calendartable/> */}
-          <div>
-          
-          <CalendarModal/>
-          </div>
-      </>
-    );
+  return (
+    <div className="App">
+      <KakaoMap />
+    </div>
+  );
 }
 
 export default App;
