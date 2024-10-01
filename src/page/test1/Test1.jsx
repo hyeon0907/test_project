@@ -25,8 +25,10 @@ const buttonimage = (toggle) => css`
 const KakaoMap = () => {
     const [toggle, setToggle] = useState("map");
     const [center, setCenter] = useState({
-        lat: 35.15736,
-        lng: 129.0590,
+        // lat: 35.15736,
+        lat: 35.1498046404393,
+        // lng: 129.0590,
+        lng: 129.001871279832
     });
     const [position, setPosition] = useState({
         lat: "",
@@ -60,7 +62,7 @@ const KakaoMap = () => {
                 }}
             >
                 <ZoomControl position={"RIGHT"} />
-                <MapMarker position={position ?? center} />
+                <MapMarker position={center} />
                 {toggle === "map" && (
                     <button
                         css={buttonimage(toggle)} // toggle 상태를 넘김
