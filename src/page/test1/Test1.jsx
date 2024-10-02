@@ -23,6 +23,7 @@ const buttonimage = (toggle) => css`
 `;
 
 const KakaoMap = () => {
+
     const [toggle, setToggle] = useState("map");
     const [center, setCenter] = useState({
         // lat: 35.15736,
@@ -44,6 +45,7 @@ const KakaoMap = () => {
 
     return (
         <div style={{ width: "1000px", height: "900px", position: "relative", margin: "0px auto" }}>
+            aaa
             <Map
                 center={center}
                 style={{
