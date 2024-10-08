@@ -45,7 +45,6 @@ const KakaoMap = () => {
 
     return (
         <div style={{ width: "1000px", height: "900px", position: "relative", margin: "0px auto" }}>
-            aaa
             <Map
                 center={center}
                 style={{

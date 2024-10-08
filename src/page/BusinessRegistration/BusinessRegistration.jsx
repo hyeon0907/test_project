@@ -30,9 +30,9 @@ const BusinessRegistration = () => {
           accept: 'application/json',
         },
       });
-      console.log(response.data);
+      console.log(response);
       // response.data.data의 b_stt_cd 코드 종류(01 계속사업자, 02 휴업자, 03 폐업자)
-      if (response.data.status_code == "OK") {
+      if (response.data.data[0].b_stt_cd == "01") {
         setBusinessInfo("인증완료");
         setError('');
         console.log(businessInfo);
