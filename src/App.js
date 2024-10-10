@@ -8,8 +8,12 @@ import BusinessRegistration from './page/BusinessRegistration/BusinessRegistrati
 import CalendarModal from './page/CalendarModal/CalendarModal';
 import OcrComponent2 from './page/OcrComponent2/OcrComponent2';
 import ImageVerificationComponent from './page/ImageVerificationComponent/ImageVerificationComponent';
+import ExcelReader from './page/ExcelReader/ExcelReader';
+import { useQuery } from 'react-query';
+import { instance } from './apis/util/instance';
 
 function App() {
+
   return (
       <Routes>
         <Route path="/map" element={<KakaoMap/>} />
@@ -20,6 +24,7 @@ function App() {
         <Route path="/img3" element={<ImageVerificationComponent />} />
         <Route path="/check" element={<BusinessRegistration/>} />
         <Route path="/calendar" element={<CalendarModal/>} />
+        <Route path="/excel" element={<ExcelReader/>} />
       </Routes>
   );
 }

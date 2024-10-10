@@ -33,13 +33,16 @@
     "react-js-pagination": "^3.0.3",
     "react-kakao-maps-sdk": "^1.1.27",
     "react-modal": "^3.16.1",
+    "react-query": "^3.39.3",
     "react-router-dom": "^6.26.2",
     "react-scripts": "5.0.1",
     "react-spinners": "^0.14.1",
+    "read-excel-file": "^5.8.6",
     "recoil": "^0.7.7",
     "tesseract.js": "^5.1.1",
     "uuid": "^10.0.0",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "react-scripts start",

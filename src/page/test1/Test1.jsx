@@ -1,102 +1,97 @@
 /*global kakao*/
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+import * as s from "./style";
 import { useEffect, useState } from "react";
-import { Map, MapMarker, MapTypeControl, Roadview, ZoomControl, useKakaoLoader } from "react-kakao-maps-sdk";
+import { Map, MapTypeControl, ZoomControl, useKakaoLoader } from "react-kakao-maps-sdk";
+import { QueryClient, useQuery, useQueryClient } from "react-query";
+import { instance } from "../../apis/util/instance";
 
-// buttonimage 스타일에서 toggle에 따라 background-position이 변경됨
-const buttonimage = (toggle) => css`
-    position: absolute;
-    border: none;
-    top: 5px;
-    right: 50px;
-    width: 42px;
-    height: 42px;
-    z-index: 10;
-    background: url(//t1.daumcdn.net/localimg/localimages/07/2018/pc/common/img_search.png) 
-        ${toggle === "map" ? "0 -450px" : "0 -350px"} no-repeat;
-    cursor: pointer;
-
-    &:active{
-        background-position: 0 -350px;
-    }
-`;
-
-const KakaoMap = () => {
-
-    const [toggle, setToggle] = useState("map");
+function MapPage(props) {
+    const [ check, setCheck ] = useState("전체");
+    const [loading, error] = useKakaoLoader({
+        appkey: process.env.REACT_APP_KAKAOMAP_API_KEY, // 발급 받은 APPKEY
+    })
     const [center, setCenter] = useState({
-        // lat: 35.15736,
-        lat: 35.1498046404393,
-        // lng: 129.0590,
-        lng: 129.001871279832
+        lat: 35.156359,
+        lng: 129.0631410,
     });
-    const [position, setPosition] = useState({
-        lat: "",
-        lng: "",
-    });
-    useKakaoLoader();
 
-    useEffect(() => {
-        if (toggle === "map") {
-            setPosition({ lat: "", lng: "" });
+    const cafe = useQuery(
+        ["cafeQuery", check],
+        async () => {
+            return instance.get(`/cafe/get/${check}`);
+        },
+        {
+            onSuccess: response => console.log(response),
+            refetchOnWindowFocus: false,
+            retry: 0,
         }
-    }, [toggle]);
+    )
+
+    
+
+    const handleOnChange = (e) => {
+        setCheck(e.target.value);
+        console.log(e.target.value); // 변경된 value를 확인
+    };
 
     return (
-        <div style={{ width: "1000px", height: "900px", position: "relative", margin: "0px auto" }}>
-            <Map
-                center={center}
-                style={{
-                    width: "1000px",
-                    height: "900px",
-                    display: toggle === "map" ? "block" : "none",
-                    margin: "0px auto",
-                }}
-                level={4}
-                onClick={(_, mouseEvent) => {
-                    const latlng = mouseEvent.latLng;
-                    setPosition({
-                        lat: latlng.getLat(),
-                        lng: latlng.getLng(),
-                    });
-                }}
-            >
+        <div css={s.layout}>
+            <div css={s.box}>
+                <div css={s.header}>
+                    <div css={s.logobox}>
+                        <button>이벤트 이동</button>
+                        LOGO
+                    </div>
+                    <div css={s.inputbox}>
+                        <input type="text" />
+                        <button>확인</button>
+                        <fieldset css={s.radiobutton}>
+                            <label>
+                                <input type="radio" name="menu" onChange={handleOnChange} value={"전체"} checked={check == "전체"} />
+                                전체
+                            </label>
+                            <label>
+                                <input type="radio" name="menu" onChange={handleOnChange} value={"브런치"} checked={check == "브런치"}/>
+                                브런치
+                            </label>
+                            <label>
+                                <input type="radio" name="menu" onChange={handleOnChange} value={"분위기"} checked={check == "분위기"}/>
+                                분위기
+                            </label>
+                            <label>
+                                <input type="radio" name="menu" onChange={handleOnChange} value={"베이커리"} checked={check == "베이커리"}/>
+                                베이커리
+                            </label>
+                            <label>
+                                <input type="radio" name="menu" onChange={handleOnChange} value={"디저트"} checked={check == "디저트"}/>
+                                디저트
+                            </label>
+                        </fieldset>
+                    </div>
+                </div>
+                <div css={s.content}>카페리스트
+                    <div css={s.contentlist}>
+                        <ul>
+                            {
+                                cafe.data?.data.map((result, index) => (
+                                    <li key={index}>
+                                        <p>카페이름: {result.cafeName}</p>
+                                        <p>평점</p>
+                                        <p>주소: {result.address}</p>
+                                        <p>카테고리/ 리뷰수: {result.category}</p>
+                                    </li>
+                                ))}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <Map css={s.map} center={center}>
+                <MapTypeControl position={"TOPRIGHT"} />
                 <ZoomControl position={"RIGHT"} />
-                <MapMarker position={center} />
-                {toggle === "map" && (
-                    <button
-                        css={buttonimage(toggle)} // toggle 상태를 넘김
-                        onClick={() => setToggle("roadview")}
-                        title="로드뷰 보기"
-                    />
-                )}
             </Map>
-            <Roadview
-                position={position.lat && position.lng ? { ...position, radius: 50 } : { ...center, radius: 50 }}
-                style={{
-                    display: toggle === "roadview" ? "block" : "none",
-                    width: "100%",
-                    height: "100%",
-                }}
-                onPositionChanged={(roadview) =>
-                    setCenter({
-                        lat: roadview.getPosition().getLat(),
-                        lng: roadview.getPosition().getLng(),
-                    })
-                }
-            >
-                {toggle === "roadview" && (
-                    <button
-                        css={buttonimage(toggle)} // toggle 상태를 넘김
-                        onClick={() => setToggle("map")}
-                        title="지도 보기"
-                    />
-                )}
-
-            </Roadview>
         </div>
-    );
-};
+    )
+}
 
-export default KakaoMap;
+export default MapPage;
