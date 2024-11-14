@@ -81,10 +81,10 @@ const KakaoGeocoder = () => {
 
 
     const handleOnclike = async () => {
-        console.log(results);
+        console.log(results.length - 1);
         let response = null;
 
-        for(let i = 0; i < 50; i++){
+        for (let i = 0; i <= results.length - 1; i++) {
             try {
                 response = await instance.post("/cafe/add", results[i]);
             } catch (e) {

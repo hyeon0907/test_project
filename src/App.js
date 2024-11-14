@@ -11,6 +11,8 @@ import ImageVerificationComponent from './page/ImageVerificationComponent/ImageV
 import ExcelReader from './page/ExcelReader/ExcelReader';
 import { useQuery } from 'react-query';
 import { instance } from './apis/util/instance';
+import SlideExample from './page/SlideExample/SlideExample';
+import Rating from './page/Rating/Rating';
 
 function App() {
 
@@ -25,6 +27,8 @@ function App() {
         <Route path="/check" element={<BusinessRegistration/>} />
         <Route path="/calendar" element={<CalendarModal/>} />
         <Route path="/excel" element={<ExcelReader/>} />
+        <Route path="/slide" element={<SlideExample/>} />
+        <Route path="/star" element={<Rating/>} />
       </Routes>
   );
 }
